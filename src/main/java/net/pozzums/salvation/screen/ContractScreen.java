@@ -1,8 +1,8 @@
 package net.pozzums.salvation.screen;
 
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.pozzums.salvation.registry.ModNetworking;
@@ -22,18 +22,19 @@ public class ContractScreen extends HandledScreen<ContractScreenHandler> {
 
         addDrawableChild(ButtonWidget.builder(
                 Text.literal("Change Target"),
-                b -> ModNetworking.sendCycleTarget()
+                btn -> ModNetworking.sendCycleTarget()
         ).dimensions(cx - 60, cy + 30, 120, 20).build());
 
         addDrawableChild(ButtonWidget.builder(
                 Text.literal("Change Judgment"),
-                b -> ModNetworking.sendCycleType()
+                btn -> ModNetworking.sendCycleType()
         ).dimensions(cx - 60, cy + 55, 120, 20).build());
     }
 
     @Override
     protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY) {
-        // parchment texture later
+        // Correct way in 1.20+ using DrawContext
+        ctx.fill(x, y, x + backgroundWidth, y + backgroundHeight, 0xFFDDD0);
     }
 
     @Override
@@ -42,10 +43,8 @@ public class ContractScreen extends HandledScreen<ContractScreenHandler> {
                 "Judgment: " + handler.getDraft().getType().displayName(),
                 20, 20, 0x3A2A1A, false);
 
-        if (handler.getDraft().getTarget() != null) {
-            ctx.drawText(textRenderer,
-                    "Target set",
-                    20, 35, 0x3A2A1A, false);
-        }
+        ctx.drawText(textRenderer,
+                "Target: " + (handler.getDraft().getTarget() != null ? handler.getDraft().getTarget() : "None"),
+                20, 35, 0x3A2A1A, false);
     }
 }

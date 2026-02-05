@@ -10,9 +10,7 @@ import net.pozzums.salvation.screen.ContractScreenHandler;
 
 public class ContractScrollItem extends Item {
 
-    public ContractScrollItem(Settings settings) {
-        super(settings);
-    }
+    public ContractScrollItem(Settings settings) { super(settings); }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
